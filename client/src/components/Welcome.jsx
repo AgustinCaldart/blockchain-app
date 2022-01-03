@@ -5,6 +5,8 @@ import { SiEthereum } from 'react-icons/si';
 
 import { TransactionContext } from '../context/TransactionsContext';
 import { Loader } from './';
+import { shortenAddress } from '../utils/shortenAddress';
+
 const companyCommonStyles =
   'min-h-[70px] sm:px-0 px- sm:min-w-[100px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white';
 const Input = ({ placeholder, name, type, value, handleChange }) => (
@@ -26,6 +28,7 @@ const Welcome = () => {
     setFormData,
     handleChange,
     sendTransaction,
+    isLoading,
   } = useContext(TransactionContext);
 
   const handleSubmit = (e) => {
@@ -85,7 +88,9 @@ const Welcome = () => {
                 <BsInfoCircle fontSize={17} color="#fff" />
               </div>
               <div>
-                <p className="text-white font-light text-sm">Adress</p>
+                <p className="text-white font-light text-sm">
+                  {shortenAddress(currentAccount)}
+                </p>
                 <p className="text-white font-semibold text-lg mt-1">Etherum</p>
               </div>
             </div>
@@ -118,7 +123,7 @@ const Welcome = () => {
             />
             <div className="h-[1px] w-full bg-gray-400 my-2" />
 
-            {false ? (
+            {isLoading ? (
               <Loader />
             ) : (
               <button
